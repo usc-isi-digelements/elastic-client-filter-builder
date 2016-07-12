@@ -1,0 +1,85 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../dig-common/dig-common.html">
+
+<!--
+An element which builds an elasticjs filter based on the set attributes.
+
+Example:
+
+        <elastic-client-filter-builder
+            field: "field"
+            value: "value"
+            type: "terms"
+            ejs-filter: "{{ejsFilter}}">
+        </elastic-client-filter>
+
+@demo demo/index.html
+-->
+
+<dom-module id="elastic-client-filter-builder">
+    <template>
+    </template>
+
+    <script>
+        (function() {
+            Polymer({
+                is: 'elastic-client-filter-builder',
+
+                properties: {
+                    /**
+                     * The field for the filter.
+                    */
+                    field: {
+                        type: String
+                    },
+
+                    /**
+                     * The value for the filter.
+                     */
+                    value: {
+                        type: String
+                    },
+
+                    /**
+                     * The type of filter to build.
+                     * Supported types:
+                     * term, terms
+                     */
+                    type: {
+                        type: String
+                    },
+
+                    /**
+                     * The resulting elasticjs filter
+                     */
+                    ejsFilter: {
+                        type: Object,
+                        readOnly: true,
+                        notify: true
+                    }
+                },
+
+                observers : [
+                    'buildFilter(field, value, type)'
+                ],
+
+                buildFilter: function(field, value, type) {
+                    if(type === 'term') {
+                        this.buildTermFilter(field, value);
+                    }
+                    if(type === 'terms') {
+                        this.buildTermsFilter(field, value);
+                    }
+                },
+
+                buildTermFilter: function(field, value) {
+                    this._setEjsFilter(ejs.TermFilter(field, value));
+                },
+
+                buildTermsFilter: function(field, value) {
+                    this._setEjsFilter(ejs.TermsFilter(field, value));
+                }
+            });
+        })();
+    </script>
+</dom-module>

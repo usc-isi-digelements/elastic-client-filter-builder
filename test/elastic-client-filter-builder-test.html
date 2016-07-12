@@ -1,0 +1,69 @@
+<!doctype html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+        <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+        <script src="../../web-component-tester/browser.js"></script>
+
+        <!-- Import the element to test -->
+        <link rel="import" href="../elastic-client-filter-builder.html">
+    </head>
+    <body>
+        <!-- Use the document as a place to set up your fixtures. -->
+        <test-fixture id="elastic-client-filter-builder-term-fixture">
+            <template>
+                <elastic-client-filter-builder
+                    field="testField"
+                    value="testValue"
+                    type="term">
+                </elastic-client-filter-builder>
+            </template>
+        </test-fixture>
+
+        <test-fixture id="elastic-client-filter-builder-terms-fixture">
+            <template>
+                <elastic-client-filter-builder
+                    field="testField"
+                    value="testValue"
+                    type="terms">
+                </elastic-client-filter-builder>
+            </template>
+        </test-fixture>
+
+        <script>
+            suite('<elastic-client-filter-builder>', function() {
+                var termComponent;
+                var termsComponent;
+                var ecab3;
+
+                setup(function() {
+                    termComponent = fixture('elastic-client-filter-builder-term-fixture');
+                    termsComponent = fixture('elastic-client-filter-builder-terms-fixture');
+                });
+
+                test('field is set correctly', function() {
+                    expect(termComponent.field).to.exist;
+                    expect(termComponent.field).to.equal("testField");
+                });
+
+                test('value is set correctly', function() {
+                    expect(termComponent.value).to.exist;
+                    expect(termComponent.value).to.equal("testValue");
+                });
+
+                test('term filter is built correctly', function() {
+                    expect(termComponent.ejsFilter).to.exist;
+                    expect(termComponent.ejsFilter.toJSON()).to.deep.equal(ejs.TermFilter('testField', 'testValue').toJSON());
+                });
+
+                test('terms filter is built correctly', function() {
+                    expect(termsComponent.ejsFilter).to.exist;
+                    expect(termsComponent.ejsFilter.toJSON()).to.deep.equal(ejs.TermsFilter('testField', 'testValue').toJSON());
+                });
+            });
+        </script>
+    </body>
+</html>
