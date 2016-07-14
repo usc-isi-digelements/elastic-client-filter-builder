@@ -7,9 +7,9 @@ An element which builds an elasticjs filter based on the set attributes.
 Example:
 
         <elastic-client-filter-builder
-            field: "field"
-            value: "value"
             type: "terms"
+            field: "field"
+            values: "values"
             ejs-filter: "{{ejsFilter}}">
         </elastic-client-filter>
 
@@ -34,10 +34,10 @@ Example:
                     },
 
                     /**
-                     * The value for the filter.
+                     * The values for the filter.
                      */
-                    value: {
-                        type: String
+                    values: {
+                        type: Array
                     },
 
                     /**
@@ -60,27 +60,29 @@ Example:
                 },
 
                 observers : [
-                    'buildFilter(field, value, type)'
+                    'buildFilter(type, field, values)'
                 ],
 
-                buildFilter: function(field, value, type) {
-                    if(!value || (value.constructor === Array && !value.length)) {
+                buildFilter: function(type, field, values) {
+                    if(!values || (values.constructor === Array && !values.length)) {
                         this._setEjsFilter(null);
                     }
                     else if(type === 'term') {
-                        this.buildTermFilter(field, value);
+                        this.buildTermFilter(field, values);
                     }
                     else if(type === 'terms') {
-                        this.buildTermsFilter(field, value);
+                        this.buildTermsFilter(field, values);
                     }
                 },
 
-                buildTermFilter: function(field, value) {
-                    this._setEjsFilter(ejs.TermFilter(field, value));
+                buildTermFilter: function(field, values) {
+                    var filterValue = (values.constructor === Array && values.length === 1) ? values[0] : values;
+                    this._setEjsFilter(ejs.TermFilter(field, filterValue));
                 },
 
-                buildTermsFilter: function(field, value) {
-                    this._setEjsFilter(ejs.TermsFilter(field, value));
+                buildTermsFilter: function(field, values) {
+                    var filterValue = (values.constructor === Array && values.length === 1) ? values[0] : values;
+                    this._setEjsFilter(ejs.TermsFilter(field, filterValue));
                 }
             });
         })();

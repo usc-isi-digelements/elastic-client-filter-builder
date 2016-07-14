@@ -26,7 +26,7 @@
                     component = fixture('elastic-client-filter-builder-fixture');
                     component.type = 'term';
                     component.field = 'testField';
-                    component.value = 'testValue';
+                    component.values = 'testValue';
                     flush(function() {
                       done();
                     });
@@ -42,9 +42,9 @@
                     expect(component.field).to.equal('testField');
                 });
 
-                test('value is set correctly', function() {
-                    expect(component.value).to.exist;
-                    expect(component.value).to.equal('testValue');
+                test('values is set correctly', function() {
+                    expect(component.values).to.exist;
+                    expect(component.values).to.equal('testValue');
                 });
 
                 test('term filter is built correctly', function() {
@@ -60,7 +60,7 @@
                     component = fixture('elastic-client-filter-builder-fixture');
                     component.type = 'terms';
                     component.field = 'testField';
-                    component.value = 'testValue';
+                    component.values = 'testValue';
                     flush(function() {
                       done();
                     });
@@ -76,9 +76,9 @@
                     expect(component.field).to.equal('testField');
                 });
 
-                test('value is set correctly', function() {
-                    expect(component.value).to.exist;
-                    expect(component.value).to.equal('testValue');
+                test('values is set correctly', function() {
+                    expect(component.values).to.exist;
+                    expect(component.values).to.equal('testValue');
                 });
 
                 test('term filter is built correctly', function() {
@@ -94,7 +94,7 @@
                     component = fixture('elastic-client-filter-builder-fixture');
                     component.type = 'terms';
                     component.field = 'testField';
-                    component.value = ['testValue1', 'testValue2'];
+                    component.values = ['testValue1', 'testValue2'];
                     flush(function() {
                       done();
                     });
@@ -110,10 +110,10 @@
                     expect(component.field).to.equal('testField');
                 });
 
-                test('value is set correctly', function() {
-                    expect(component.value).to.exist;
-                    expect(component.value).to.be.an('Array');
-                    expect(component.value).to.deep.equal(['testValue1', 'testValue2']);
+                test('values is set correctly', function() {
+                    expect(component.values).to.exist;
+                    expect(component.values).to.be.an('Array');
+                    expect(component.values).to.deep.equal(['testValue1', 'testValue2']);
                 });
 
                 test('terms filter is built correctly', function() {
@@ -122,14 +122,49 @@
                 });
             });
 
-            suite('<elastic-client-filter-builder> for no value', function() {
+            suite('<elastic-client-filter-builder> for terms with one value', function() {
+                var component;
+
+                setup(function(done) {
+                    component = fixture('elastic-client-filter-builder-fixture');
+                    component.type = 'terms';
+                    component.field = 'testField';
+                    component.values = ['testValue'];
+                    flush(function() {
+                      done();
+                    });
+                });
+
+                test('type is set correctly', function() {
+                    expect(component.type).to.exist;
+                    expect(component.type).to.equal('terms');
+                });
+
+                test('field is set correctly', function() {
+                    expect(component.field).to.exist;
+                    expect(component.field).to.equal('testField');
+                });
+
+                test('values is set correctly', function() {
+                    expect(component.values).to.exist;
+                    expect(component.values).to.be.an('Array');
+                    expect(component.values).to.deep.equal(['testValue']);
+                });
+
+                test('terms filter is built correctly', function() {
+                    expect(component.ejsFilter).to.exist;
+                    expect(component.ejsFilter.toJSON()).to.deep.equal(ejs.TermsFilter('testField', 'testValue').toJSON());
+                });
+            });
+
+            suite('<elastic-client-filter-builder> for no values', function() {
                 var component;
 
                 setup(function(done) {
                     component = fixture('elastic-client-filter-builder-fixture');
                     component.type = 'term';
                     component.field = 'testField';
-                    component.value = '';
+                    component.values = '';
                     flush(function() {
                       done();
                     });
@@ -145,9 +180,9 @@
                     expect(component.field).to.equal('testField');
                 });
 
-                test('value is set correctly', function() {
-                    expect(component.value).to.exist;
-                    expect(component.value).to.equal('');
+                test('values is set correctly', function() {
+                    expect(component.values).to.exist;
+                    expect(component.values).to.equal('');
                 });
 
                 test('filter is not built', function() {
