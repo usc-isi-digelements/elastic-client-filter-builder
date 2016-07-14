@@ -64,10 +64,13 @@ Example:
                 ],
 
                 buildFilter: function(field, value, type) {
-                    if(type === 'term') {
+                    if(!value || (value.constructor === Array && !value.length)) {
+                        this._setEjsFilter(null);
+                    }
+                    else if(type === 'term') {
                         this.buildTermFilter(field, value);
                     }
-                    if(type === 'terms') {
+                    else if(type === 'terms') {
                         this.buildTermsFilter(field, value);
                     }
                 },
