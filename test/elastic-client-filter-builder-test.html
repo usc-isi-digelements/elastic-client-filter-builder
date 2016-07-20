@@ -32,6 +32,11 @@
                     });
                 });
 
+                test('not is set correctly', function() {
+                    expect(component.not).to.exist;
+                    expect(component.not).to.be.false;
+                });
+
                 test('type is set correctly', function() {
                     expect(component.type).to.exist;
                     expect(component.type).to.equal('term');
@@ -53,6 +58,46 @@
                 });
             });
 
+            suite('<elastic-client-filter-builder> for not term', function() {
+                var component;
+
+                setup(function(done) {
+                    component = fixture('elastic-client-filter-builder-fixture');
+                    component.not = true;
+                    component.type = 'term';
+                    component.field = 'testField';
+                    component.values = 'testValue';
+                    flush(function() {
+                      done();
+                    });
+                });
+
+                test('not is set correctly', function() {
+                    expect(component.not).to.exist;
+                    expect(component.not).to.be.true;
+                });
+
+                test('type is set correctly', function() {
+                    expect(component.type).to.exist;
+                    expect(component.type).to.equal('term');
+                });
+
+                test('field is set correctly', function() {
+                    expect(component.field).to.exist;
+                    expect(component.field).to.equal('testField');
+                });
+
+                test('values is set correctly', function() {
+                    expect(component.values).to.exist;
+                    expect(component.values).to.equal('testValue');
+                });
+
+                test('term filter is built correctly', function() {
+                    expect(component.ejsFilter).to.exist;
+                    expect(component.ejsFilter.toJSON()).to.deep.equal(ejs.NotFilter(ejs.TermFilter('testField', 'testValue')).toJSON());
+                });
+            });
+
             suite('<elastic-client-filter-builder> for terms', function() {
                 var component;
 
@@ -64,6 +109,11 @@
                     flush(function() {
                       done();
                     });
+                });
+
+                test('not is set correctly', function() {
+                    expect(component.not).to.exist;
+                    expect(component.not).to.be.false;
                 });
 
                 test('type is set correctly', function() {

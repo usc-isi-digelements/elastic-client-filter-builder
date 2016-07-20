@@ -41,6 +41,14 @@ Example:
                     },
 
                     /**
+                     * Whether to build a 'not' filter.
+                     */
+                    not: {
+                        type: Boolean,
+                        value: false
+                    },
+
+                    /**
                      * The type of filter to build.
                      * Supported types:
                      * term, terms
@@ -60,29 +68,28 @@ Example:
                 },
 
                 observers : [
-                    'buildFilter(type, field, values)'
+                    'buildFilter(not, type, field, values)'
                 ],
 
-                buildFilter: function(type, field, values) {
+                buildFilter: function(not, type, field, values) {
+                    var ejsFilter;
                     if(!values || (values.constructor === Array && !values.length)) {
                         this._setEjsFilter(null);
                     }
                     else if(type === 'term') {
-                        this.buildTermFilter(field, values);
+                        var term = (values.constructor === Array && values.length === 1) ? values[0] : values;
+                        ejsFilter = ejs.TermFilter(field, term);
                     }
                     else if(type === 'terms') {
-                        this.buildTermsFilter(field, values);
+                        var terms = (values.constructor === Array && values.length === 1) ? values[0] : values;
+                        ejsFilter = ejs.TermsFilter(field, terms);
                     }
-                },
-
-                buildTermFilter: function(field, values) {
-                    var term = (values.constructor === Array && values.length === 1) ? values[0] : values;
-                    this._setEjsFilter(ejs.TermFilter(field, term));
-                },
-
-                buildTermsFilter: function(field, values) {
-                    var terms = (values.constructor === Array && values.length === 1) ? values[0] : values;
-                    this._setEjsFilter(ejs.TermsFilter(field, terms));
+                    if(ejsFilter) {
+                        if(not) {
+                            ejsFilter = ejs.NotFilter(ejsFilter);
+                        }
+                        this._setEjsFilter(ejsFilter);
+                    }
                 }
             });
         })();
