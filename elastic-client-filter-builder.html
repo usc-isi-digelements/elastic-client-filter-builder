@@ -11,7 +11,7 @@ Example:
             field: "field"
             values: "values"
             ejs-filter: "{{ejsFilter}}">
-        </elastic-client-filter>
+        </elastic-client-filter-builder>
 
 @demo demo/index.html
 -->
@@ -50,7 +50,7 @@ Example:
                     },
 
                     /**
-                     * The resulting elasticjs filter
+                     * The built elasticjs filter.
                      */
                     ejsFilter: {
                         type: Object,
@@ -76,13 +76,13 @@ Example:
                 },
 
                 buildTermFilter: function(field, values) {
-                    var filterValue = (values.constructor === Array && values.length === 1) ? values[0] : values;
-                    this._setEjsFilter(ejs.TermFilter(field, filterValue));
+                    var term = (values.constructor === Array && values.length === 1) ? values[0] : values;
+                    this._setEjsFilter(ejs.TermFilter(field, term));
                 },
 
                 buildTermsFilter: function(field, values) {
-                    var filterValue = (values.constructor === Array && values.length === 1) ? values[0] : values;
-                    this._setEjsFilter(ejs.TermsFilter(field, filterValue));
+                    var terms = (values.constructor === Array && values.length === 1) ? values[0] : values;
+                    this._setEjsFilter(ejs.TermsFilter(field, terms));
                 }
             });
         })();

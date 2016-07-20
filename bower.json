@@ -1,6 +1,6 @@
 {
   "name": "elastic-client-filter-builder",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "authors": [
     "Next Century Corporation"
   ],
@@ -10,7 +10,7 @@
     "polymer",
     "seed"
   ],
-  "main": "elastic-client-filter.html",
+  "main": "elastic-client-filter-builder.html",
   "license": "http://polymer.github.io/LICENSE.txt",
   "homepage": "https://github.com/DigElements/elastic-client-filter-builder/",
   "ignore": [
