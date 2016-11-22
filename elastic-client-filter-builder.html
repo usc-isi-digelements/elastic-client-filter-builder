@@ -7,10 +7,10 @@ An element which builds an elasticjs filter based on the set attributes.
 Example:
 
         <elastic-client-filter-builder
-            type: "terms"
-            field: "field"
-            values: "values"
-            ejs-filter: "{{ejsFilter}}">
+            type="terms"
+            field="field"
+            values="values"
+            ejs-filter="{{ejsFilter}}">
         </elastic-client-filter-builder>
 
 @demo demo/index.html
@@ -68,10 +68,10 @@ Example:
                 },
 
                 observers : [
-                    'buildFilter(not, type, field, values)'
+                    '_buildFilter(not, type, field, values)'
                 ],
 
-                buildFilter: function(not, type, field, values) {
+                _buildFilter: function(not, type, field, values) {
                     var ejsFilter;
                     if(!values || (values.constructor === Array && !values.length)) {
                         this._setEjsFilter(null);
