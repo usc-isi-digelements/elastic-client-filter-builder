@@ -28,13 +28,16 @@ Example:
                 properties: {
                     /**
                      * The field for the filter.
-                    */
+                     * @type {String}
+                     */
                     field: {
                         type: String
                     },
 
                     /**
-                     * The values for the filter.
+                     * The value or array of values for the filter.  For "and" and "or" filters, this should be an array of elasticjs filter objects.
+                     * For "range" filters, this should be an array with two items:  the "lte" value and the "gte" value (or undefined for no value).
+                     * @type {String|Array}
                      */
                     values: {
                         type: Array
@@ -42,6 +45,8 @@ Example:
 
                     /**
                      * Whether to build a 'not' filter.
+                     * @type {Boolean}
+                     * @default false
                      */
                     not: {
                         type: Boolean,
@@ -49,32 +54,69 @@ Example:
                     },
 
                     /**
+                     * The name for the filter.
+                     * @type {String}
+                     * @default ''
+                     */
+                    name: {
+                        type: String,
+                        value: ''
+                    },
+
+                    /**
                      * The type of filter to build.
-                     * Supported types:
-                     * term, terms
+                     * Supported:  and, exists, or, range, term, terms
+                     * @type {String}
                      */
                     type: {
                         type: String
                     },
 
                     /**
-                     * The built elasticjs filter.
+                     * The built elasticjs filter object.
+                     * @type {ejs.Filter}
                      */
                     ejsFilter: {
                         type: Object,
-                        readOnly: true,
-                        notify: true
+                        notify: true,
+                        computed: 'buildFilter(type, not, name, field, values)'
                     }
                 },
 
-                observers : [
-                    '_buildFilter(not, type, field, values)'
-                ],
-
-                _buildFilter: function(not, type, field, values) {
+                /**
+                 * Builds and returns an elasticjs filter object using the given input or returns undefined if an object could not be built.
+                 * @param {String} type The filter type
+                 * @param {Boolean} not Whether to build a 'not' filter
+                 * @param {String} name The filter name or a falsey value if the filter does not need a name
+                 * @param {String} field The filter field
+                 * @param {String|Array} values The filter value or values
+                 * @return {ejs.Filter} The elasticjs filter object
+                 */
+                buildFilter: function(type, not, name, field, values) {
                     var ejsFilter;
-                    if(!values || (values.constructor === Array && !values.length)) {
-                        this._setEjsFilter(null);
+                    if(type === 'exists') {
+                        ejsFilter = ejs.ExistsFilter(field);
+                    }
+                    else if(!values || (values.constructor === Array && !values.length)) {
+                        // Set the filter to null to trigger the observers for other elastic-client-* web components.
+                        return null;
+                    }
+                    else if(type === 'and') {
+                        ejsFilter = ejs.AndFilter(values);
+                    }
+                    else if(type === 'or') {
+                        ejsFilter = ejs.OrFilter(values);
+                    }
+                    else if(type === 'range') {
+                        ejsFilter = ejs.RangeFilter(field);
+                        if(values.constructor === Array && values.length === 2) {
+                            if(typeof values[0] !== 'undefined') {
+                                ejsFilter.lte(values[0]);
+                            }
+                            if(typeof values[1] !== 'undefined') {
+                                ejsFilter.gte(values[1]);
+                            }
+                        }
                     }
                     else if(type === 'term') {
                         var term = (values.constructor === Array && values.length === 1) ? values[0] : values;
@@ -84,12 +126,15 @@ Example:
                         var terms = (values.constructor === Array && values.length === 1) ? values[0] : values;
                         ejsFilter = ejs.TermsFilter(field, terms);
                     }
-                    if(ejsFilter) {
-                        if(not) {
-                            ejsFilter = ejs.NotFilter(ejsFilter);
-                        }
-                        this._setEjsFilter(ejsFilter);
+                    // Post filter creation.
+                    if(ejsFilter && not) {
+                        ejsFilter = ejs.NotFilter(ejsFilter);
                     }
+                    if(ejsFilter && name) {
+                        ejsFilter = ejsFilter.name(name);
+                    }
+                    // Set the filter to either the elasticjs filter object or undefined.
+                    return ejsFilter;
                 }
             });
         })();
