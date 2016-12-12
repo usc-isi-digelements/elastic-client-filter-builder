@@ -1,17 +1,18 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../dig-common/dig-common.html">
+<script src="../elastic.js/dist/elastic.js"></script>
 
 <!--
-An element which builds an elasticjs filter based on the set attributes.
+A Polymer Element which builds an elasticjs filter based on the set attributes.
 
-Example:
-
-        <elastic-client-filter-builder
-            type="terms"
-            field="field"
-            values="values"
-            ejs-filter="{{ejsFilter}}">
-        </elastic-client-filter-builder>
+### Example
+```html
+<elastic-client-filter-builder
+  type="terms"
+  field="field"
+  values="values"
+  ejs-filter="{{ejsFilter}}">
+</elastic-client-filter-builder>
+```
 
 @demo demo/index.html
 -->
@@ -27,7 +28,10 @@ Example:
 
                 properties: {
                     /**
+                     * (Required)
+                     *
                      * The field for the filter.
+                     *
                      * @type {String}
                      */
                     field: {
@@ -35,8 +39,11 @@ Example:
                     },
 
                     /**
+                     * (Required)
+                     *
                      * The value or array of values for the filter.  For "and" and "or" filters, this should be an array of elasticjs filter objects.
                      * For "range" filters, this should be an array with two items:  the "lte" value and the "gte" value (or undefined for no value).
+                     *
                      * @type {String|Array}
                      */
                     values: {
@@ -44,7 +51,10 @@ Example:
                     },
 
                     /**
+                     * (Optional)
+                     *
                      * Whether to build a 'not' filter.
+                     *
                      * @type {Boolean}
                      * @default false
                      */
@@ -54,7 +64,10 @@ Example:
                     },
 
                     /**
+                     * (Optional)
+                     *
                      * The name for the filter.
+                     *
                      * @type {String}
                      * @default ''
                      */
@@ -64,8 +77,11 @@ Example:
                     },
 
                     /**
+                     * (Required)
+                     *
                      * The type of filter to build.
                      * Supported:  and, exists, or, range, term, terms
+                     *
                      * @type {String}
                      */
                     type: {
@@ -73,7 +89,10 @@ Example:
                     },
 
                     /**
+                     * (Output)
+                     *
                      * The built elasticjs filter object.
+                     *
                      * @type {ejs.Filter}
                      */
                     ejsFilter: {
@@ -85,6 +104,7 @@ Example:
 
                 /**
                  * Builds and returns an elasticjs filter object using the given input or returns undefined if an object could not be built.
+                 *
                  * @param {String} type The filter type
                  * @param {Boolean} not Whether to build a 'not' filter
                  * @param {String} name The filter name or a falsey value if the filter does not need a name

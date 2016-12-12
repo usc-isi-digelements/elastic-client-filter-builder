@@ -1,24 +1,35 @@
 # elastic-client-filter-builder
 
-An element which builds an elasticjs filter based on the set attributes.
+A Polymer Element which builds an elasticjs filter based on the set attributes.
 
-Example:
+### Example
 ```html
-    <elastic-client-filter-builder
-        type="terms"
-        field="field"
-        values="values"
-        ejs-filter="{{ejsFilter}}">
-    </elastic-client-filter-builder>
+<elastic-client-filter-builder
+  type="terms"
+  field="field"
+  values="values"
+  ejs-filter="{{ejsFilter}}">
+</elastic-client-filter-builder>
 ```
 
-## Dependencies
+### Dependencies
 
-Element dependencies are managed via [Bower](http://bower.io/). You can
-install that via:
+Dependencies are installed using [Bower](http://bower.io/):
 
     npm install -g bower
-
-Then, go ahead and download the element's dependencies:
-
     bower install
+
+### Testing
+
+Tests are run using [web-component-tester](https://github.com/Polymer/web-component-tester):
+
+    npm install -g web-component-tester
+    wct
+
+### Demonstration & Documentation
+
+Demonstration and documentation are viewed using [polyserve](https://github.com/PolymerLabs/polyserve):
+
+    npm install -g polyserve
+    polyserve
+
