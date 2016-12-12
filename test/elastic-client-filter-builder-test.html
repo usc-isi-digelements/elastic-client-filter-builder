@@ -40,6 +40,10 @@
                     expect(element.ejsFilter).to.exist;
                     expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.TermFilter('testField', 'testValue').toJSON());
                 });
+
+                test('does not have html content', function() {
+                    expect(Polymer.dom(element.root).children.length).to.equal(0);
+                });
             });
 
             suite('<elastic-client-filter-builder> for term filter with name', function() {
@@ -67,6 +71,10 @@
                 test('term filter is built correctly', function() {
                     expect(element.ejsFilter).to.exist;
                     expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.TermFilter('testField', 'testValue').name('testName').toJSON());
+                });
+
+                test('does not have html content', function() {
+                    expect(Polymer.dom(element.root).children.length).to.equal(0);
                 });
             });
 
@@ -96,6 +104,10 @@
                     expect(element.ejsFilter).to.exist;
                     expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.NotFilter(ejs.TermFilter('testField', 'testValue')).toJSON());
                 });
+
+                test('does not have html content', function() {
+                    expect(Polymer.dom(element.root).children.length).to.equal(0);
+                });
             });
 
             suite('<elastic-client-filter-builder> for terms filter', function() {
@@ -123,6 +135,10 @@
                     expect(element.ejsFilter).to.exist;
                     expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.TermsFilter('testField', 'testValue').toJSON());
                 });
+
+                test('does not have html content', function() {
+                    expect(Polymer.dom(element.root).children.length).to.equal(0);
+                });
             });
 
             suite('<elastic-client-filter-builder> for terms filter array', function() {
@@ -139,6 +155,8 @@
                 });
 
                 test('properties are set correctly', function() {
+                    expect(element.not).to.be.false;
+                    expect(element.name).to.equal('');
                     expect(element.type).to.equal('terms');
                     expect(element.field).to.equal('testField');
                     expect(element.values).to.be.an('Array');
@@ -148,6 +166,10 @@
                 test('terms filter is built correctly', function() {
                     expect(element.ejsFilter).to.exist;
                     expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.TermsFilter('testField', ['testValue1', 'testValue2']).toJSON());
+                });
+
+                test('does not have html content', function() {
+                    expect(Polymer.dom(element.root).children.length).to.equal(0);
                 });
             });
 
@@ -165,6 +187,8 @@
                 });
 
                 test('properties are set correctly', function() {
+                    expect(element.not).to.be.false;
+                    expect(element.name).to.equal('');
                     expect(element.type).to.equal('terms');
                     expect(element.field).to.equal('testField');
                     expect(element.values).to.be.an('Array');
@@ -174,6 +198,10 @@
                 test('terms filter is built correctly', function() {
                     expect(element.ejsFilter).to.exist;
                     expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.TermsFilter('testField', 'testValue').toJSON());
+                });
+
+                test('does not have html content', function() {
+                    expect(Polymer.dom(element.root).children.length).to.equal(0);
                 });
             });
 
@@ -191,6 +219,8 @@
                 });
 
                 test('properties are set correctly', function() {
+                    expect(element.not).to.be.false;
+                    expect(element.name).to.equal('');
                     expect(element.type).to.equal('and');
                     expect(element.field).to.be.null;
                     expect(element.values).to.be.an('Array');
@@ -202,6 +232,10 @@
                 test('and filter is built correctly', function() {
                     expect(element.ejsFilter).to.exist;
                     expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.AndFilter([ejs.TermFilter('testField1', 'testValue1'), ejs.TermFilter('testField2', 'testValue2')]).toJSON());
+                });
+
+                test('does not have html content', function() {
+                    expect(Polymer.dom(element.root).children.length).to.equal(0);
                 });
             });
 
@@ -219,6 +253,8 @@
                 });
 
                 test('properties are set correctly', function() {
+                    expect(element.not).to.be.false;
+                    expect(element.name).to.equal('');
                     expect(element.type).to.equal('or');
                     expect(element.field).to.be.null;
                     expect(element.values).to.be.an('Array');
@@ -230,6 +266,10 @@
                 test('or filter is built correctly', function() {
                     expect(element.ejsFilter).to.exist;
                     expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.OrFilter([ejs.TermFilter('testField1', 'testValue1'), ejs.TermFilter('testField2', 'testValue2')]).toJSON());
+                });
+
+                test('does not have html content', function() {
+                    expect(Polymer.dom(element.root).children.length).to.equal(0);
                 });
             });
 
@@ -247,6 +287,8 @@
                 });
 
                 test('properties are set correctly', function() {
+                    expect(element.not).to.be.false;
+                    expect(element.name).to.equal('');
                     expect(element.type).to.equal('range');
                     expect(element.field).to.equal('testField');
                     expect(element.values).to.deep.equal(['testValue1', 'testValue2']);
@@ -255,6 +297,10 @@
                 test('range filter is built correctly', function() {
                     expect(element.ejsFilter).to.exist;
                     expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.RangeFilter('testField').lte('testValue1').gte('testValue2').toJSON());
+                });
+
+                test('does not have html content', function() {
+                    expect(Polymer.dom(element.root).children.length).to.equal(0);
                 });
             });
 
@@ -272,6 +318,8 @@
                 });
 
                 test('properties are set correctly', function() {
+                    expect(element.not).to.be.false;
+                    expect(element.name).to.equal('');
                     expect(element.type).to.equal('exists');
                     expect(element.field).to.equal('testField');
                     expect(element.values).to.be.null;
@@ -280,6 +328,10 @@
                 test('range filter is built correctly', function() {
                     expect(element.ejsFilter).to.exist;
                     expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.ExistsFilter('testField').toJSON());
+                });
+
+                test('does not have html content', function() {
+                    expect(Polymer.dom(element.root).children.length).to.equal(0);
                 });
             });
 
@@ -297,6 +349,8 @@
                 });
 
                 test('properties are set correctly', function() {
+                    expect(element.not).to.be.false;
+                    expect(element.name).to.equal('');
                     expect(element.type).to.equal('term');
                     expect(element.field).to.equal('testField');
                     expect(element.values).to.equal('');
@@ -304,6 +358,10 @@
 
                 test('filter is not built', function() {
                     expect(element.ejsFilter).to.be.null;
+                });
+
+                test('does not have html content', function() {
+                    expect(Polymer.dom(element.root).children.length).to.equal(0);
                 });
             });
 
@@ -321,6 +379,8 @@
                 });
 
                 test('properties are set correctly', function() {
+                    expect(element.not).to.be.false;
+                    expect(element.name).to.equal('');
                     expect(element.type).to.equal('term');
                     expect(element.field).to.equal('testField');
                     expect(element.values).to.deep.equal([]);
@@ -328,6 +388,10 @@
 
                 test('filter is not built', function() {
                     expect(element.ejsFilter).to.be.null;
+                });
+
+                test('does not have html content', function() {
+                    expect(Polymer.dom(element.root).children.length).to.equal(0);
                 });
             });
         </script>
