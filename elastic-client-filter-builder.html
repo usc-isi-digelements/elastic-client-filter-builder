@@ -110,14 +110,15 @@ A Polymer Element which builds an elasticjs filter based on the set attributes.
                  * @param {String} name The filter name or a falsey value if the filter does not need a name
                  * @param {String} field The filter field
                  * @param {String|Array} values The filter value or values
+                 * @param {Boolean} force Build a filter even if the values are undefined or an empty array
                  * @return {ejs.Filter} The elasticjs filter object
                  */
-                buildFilter: function(type, not, name, field, values) {
+                buildFilter: function(type, not, name, field, values, force) {
                     var ejsFilter;
                     if(type === 'exists') {
                         ejsFilter = ejs.ExistsFilter(field);
                     }
-                    else if(!values || (values.constructor === Array && !values.length)) {
+                    else if(!force && (!values || (values.constructor === Array && !values.length))) {
                         // Set the filter to null to trigger the observers for other elastic-client-* web components.
                         return null;
                     }
@@ -129,7 +130,7 @@ A Polymer Element which builds an elasticjs filter based on the set attributes.
                     }
                     else if(type === 'range') {
                         ejsFilter = ejs.RangeFilter(field);
-                        if(values.constructor === Array && values.length === 2) {
+                        if(values && values.constructor === Array && values.length === 2) {
                             if(typeof values[0] !== 'undefined') {
                                 ejsFilter.lte(values[0]);
                             }
@@ -139,11 +140,11 @@ A Polymer Element which builds an elasticjs filter based on the set attributes.
                         }
                     }
                     else if(type === 'term') {
-                        var term = (values.constructor === Array && values.length === 1) ? values[0] : values;
+                        var term = (values && values.constructor === Array && values.length === 1) ? values[0] : values;
                         ejsFilter = ejs.TermFilter(field, term);
                     }
                     else if(type === 'terms') {
-                        var terms = (values.constructor === Array && values.length === 1) ? values[0] : values;
+                        var terms = (values && values.constructor === Array && values.length === 1) ? values[0] : values;
                         ejsFilter = ejs.TermsFilter(field, terms);
                     }
                     // Post filter creation.

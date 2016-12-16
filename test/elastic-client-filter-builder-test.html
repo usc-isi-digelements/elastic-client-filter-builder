@@ -394,6 +394,26 @@
                     expect(Polymer.dom(element.root).children.length).to.equal(0);
                 });
             });
+
+            suite('<elastic-client-filter-builder> buildFilter with force', function() {
+                var element;
+
+                setup(function() {
+                    element = fixture('elastic-client-filter-builder-fixture');
+                });
+
+                test('filter is built if values is blank but force is true', function() {
+                    var filter = element.buildFilter('term', false, 'name', 'field', undefined, true);
+                    expect(filter).to.exist;
+                    expect(filter.toJSON()).to.deep.equal(ejs.TermFilter('field', undefined).name('name').toJSON());
+                });
+
+                test('filter is built if values is empty array but force is true', function() {
+                    var filter = element.buildFilter('term', false, 'name', 'field', [], true);
+                    expect(filter).to.exist;
+                    expect(filter.toJSON()).to.deep.equal(ejs.TermFilter('field', []).name('name').toJSON());
+                });
+            });
         </script>
     </body>
 </html>
