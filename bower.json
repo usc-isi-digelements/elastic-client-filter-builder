@@ -1,7 +1,7 @@
 {
   "name": "elastic-client-filter-builder",
   "description": "A Polymer Element which builds an elasticjs filter based on the set attributes.",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "authors": ["Next Century Corporation"],
   "license": "Apache-2.0",
   "keywords": [
@@ -10,7 +10,6 @@
     "elastic.js"
   ],
   "main": "elastic-client-filter-builder.html",
-  "license": "http://polymer.github.io/LICENSE.txt",
   "homepage": "https://github.com/DigElements/elastic-client-filter-builder/",
   "ignore": [
     "/.*",
