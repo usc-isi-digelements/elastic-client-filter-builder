@@ -70,6 +70,20 @@ limitations under the License.
 
       <p>Resulting ElasticJS filter from <code>&lt;elastic-client-filter-builder&gt;</code>: {{stringify(filter3)}}</p>
 
+      <p>===== DEMO 4 =====</p>
+      <p>Field: 'myField'</p>
+      <p>Values: [1, 10]</p>
+      <p>Type: 'range'</p>
+      <p>Not: false</p>
+
+      <elastic-client-filter-builder
+        field="myField"
+        values='[1, 10]'
+        type="range"
+        ejs-filter="{{filter4}}">
+      </elastic-client-filter-builder>
+
+      <p>Resulting ElasticJS filter from <code>&lt;elastic-client-filter-builder&gt;</code>: {{stringify(filter4)}}</p>
     </template>
 
     <script>

@@ -148,10 +148,10 @@ A Polymer Element which builds an elasticjs filter based on the set attributes.
             ejsFilter = ejs.RangeFilter(field);
             if(values && values.constructor === Array && values.length === 2) {
               if(typeof values[0] !== 'undefined') {
-                ejsFilter.lte(values[0]);
+                ejsFilter.gte(values[0]);
               }
               if(typeof values[1] !== 'undefined') {
-                ejsFilter.gte(values[1]);
+                ejsFilter.lte(values[1]);
               }
             }
           }
