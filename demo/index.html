@@ -19,73 +19,74 @@ limitations under the License.
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
     <title>elastic-client-filter-builder Demo</title>
-    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
     <link rel="import" href="../elastic-client-filter-builder.html">
   </head>
   <body unresolved>
-    <template is="dom-bind" id="demo">
-      <p>===== DEMO 1 =====</p>
-      <p>Field: 'myField'</p>
-      <p>Values: ['myValue']</p>
-      <p>Type: 'terms'</p>
-      <p>Not: false</p>
+    <dom-bind>
+      <template is="dom-bind" id="demo">
+        <p>===== DEMO 1 =====</p>
+        <p>Field: 'myField'</p>
+        <p>Values: ['myValue']</p>
+        <p>Type: 'terms'</p>
+        <p>Not: false</p>
 
-      <elastic-client-filter-builder
-        field="myField"
-        values='["myValue"]'
-        type="terms"
-        ejs-filter="{{filter1}}">
-      </elastic-client-filter-builder>
+        <elastic-client-filter-builder
+          field="myField"
+          values='["myValue"]'
+          type="terms"
+          ejs-filter="{{filter1}}">
+        </elastic-client-filter-builder>
 
-      <p>Resulting ElasticJS filter from <code>&lt;elastic-client-filter-builder&gt;</code>: {{stringify(filter1)}}</p>
+        <p>Resulting ElasticJS filter from <code>&lt;elastic-client-filter-builder&gt;</code>: {{stringify(filter1)}}</p>
 
-      <p>===== DEMO 2 =====</p>
-      <p>Field: 'myField'</p>
-      <p>Values: ['myValue']</p>
-      <p>Type: 'term'</p>
-      <p>Not: false</p>
+        <p>===== DEMO 2 =====</p>
+        <p>Field: 'myField'</p>
+        <p>Values: ['myValue']</p>
+        <p>Type: 'term'</p>
+        <p>Not: false</p>
 
-      <elastic-client-filter-builder
-        field="myField"
-        values='["myValue"]'
-        type="term"
-        ejs-filter="{{filter2}}">
-      </elastic-client-filter-builder>
+        <elastic-client-filter-builder
+          field="myField"
+          values='["myValue"]'
+          type="term"
+          ejs-filter="{{filter2}}">
+        </elastic-client-filter-builder>
 
-      <p>Resulting ElasticJS filter from <code>&lt;elastic-client-filter-builder&gt;</code>: {{stringify(filter2)}}</p>
+        <p>Resulting ElasticJS filter from <code>&lt;elastic-client-filter-builder&gt;</code>: {{stringify(filter2)}}</p>
 
-      <p>===== DEMO 3 =====</p>
-      <p>Field: 'myField'</p>
-      <p>Values: ['myValue']</p>
-      <p>Type: 'terms'</p>
-      <p>Not: true</p>
+        <p>===== DEMO 3 =====</p>
+        <p>Field: 'myField'</p>
+        <p>Values: ['myValue']</p>
+        <p>Type: 'terms'</p>
+        <p>Not: true</p>
 
-      <elastic-client-filter-builder
-        field="myField"
-        values='["myValue"]'
-        type="terms"
-        not
-        ejs-filter="{{filter3}}">
-      </elastic-client-filter-builder>
+        <elastic-client-filter-builder
+          field="myField"
+          values='["myValue"]'
+          type="terms"
+          not
+          ejs-filter="{{filter3}}">
+        </elastic-client-filter-builder>
 
-      <p>Resulting ElasticJS filter from <code>&lt;elastic-client-filter-builder&gt;</code>: {{stringify(filter3)}}</p>
+        <p>Resulting ElasticJS filter from <code>&lt;elastic-client-filter-builder&gt;</code>: {{stringify(filter3)}}</p>
 
-      <p>===== DEMO 4 =====</p>
-      <p>Field: 'myField'</p>
-      <p>Values: [1, 10]</p>
-      <p>Type: 'range'</p>
-      <p>Not: false</p>
+        <p>===== DEMO 4 =====</p>
+        <p>Field: 'myField'</p>
+        <p>Values: [1, 10]</p>
+        <p>Type: 'range'</p>
+        <p>Not: false</p>
 
-      <elastic-client-filter-builder
-        field="myField"
-        values='[1, 10]'
-        type="range"
-        ejs-filter="{{filter4}}">
-      </elastic-client-filter-builder>
+        <elastic-client-filter-builder
+          field="myField"
+          values='[1, 10]'
+          type="range"
+          ejs-filter="{{filter4}}">
+        </elastic-client-filter-builder>
 
-      <p>Resulting ElasticJS filter from <code>&lt;elastic-client-filter-builder&gt;</code>: {{stringify(filter4)}}</p>
-    </template>
-
+        <p>Resulting ElasticJS filter from <code>&lt;elastic-client-filter-builder&gt;</code>: {{stringify(filter4)}}</p>
+      </template>
+    </dom-bind>
     <script>
       (function(document) {
         var demo = document.querySelector('#demo');
