@@ -31,17 +31,42 @@ limitations under the License.
     </test-fixture>
 
     <script>
+      suite('<elastic-client-filter-builder>', function() {
+        var element;
+
+        setup(function() {
+          element = fixture('elastic-client-filter-builder-fixture');
+        });
+
+        test('properties are set correctly', function() {
+          expect(element.not).to.be.false;
+          expect(element.name).to.equal('');
+          expect(element.type).to.not.exist;
+          expect(element.field).to.not.exist;
+          expect(element.values).to.not.exist;
+        });
+
+        test('filter is null', function() {
+          expect(element.ejsFilter).to.be.null;
+        });
+
+        test('buildFilter does return null or undefined', function() {
+          expect(element.buildFilter()).to.not.exist;
+        });
+
+        test('does not have html content', function() {
+          expect(Polymer.dom(element.root).children.length).to.equal(0);
+        });
+      });
+
       suite('<elastic-client-filter-builder> for term filter', function() {
         var element;
 
-        setup(function(done) {
+        setup(function() {
           element = fixture('elastic-client-filter-builder-fixture');
           element.type = 'term';
           element.field = 'testField';
           element.values = 'testValue';
-          flush(function() {
-            done();
-          });
         });
 
         test('properties are set correctly', function() {
@@ -56,24 +81,17 @@ limitations under the License.
           expect(element.ejsFilter).to.exist;
           expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.TermFilter('testField', 'testValue').toJSON());
         });
-
-        test('does not have html content', function() {
-          expect(Polymer.dom(element.root).children.length).to.equal(0);
-        });
       });
 
       suite('<elastic-client-filter-builder> for term filter with name', function() {
         var element;
 
-        setup(function(done) {
+        setup(function() {
           element = fixture('elastic-client-filter-builder-fixture');
           element.type = 'term';
           element.name = 'testName';
           element.field = 'testField';
           element.values = 'testValue';
-          flush(function() {
-            done();
-          });
         });
 
         test('properties are set correctly', function() {
@@ -88,24 +106,17 @@ limitations under the License.
           expect(element.ejsFilter).to.exist;
           expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.TermFilter('testField', 'testValue').name('testName').toJSON());
         });
-
-        test('does not have html content', function() {
-          expect(Polymer.dom(element.root).children.length).to.equal(0);
-        });
       });
 
       suite('<elastic-client-filter-builder> for not term filter', function() {
         var element;
 
-        setup(function(done) {
+        setup(function() {
           element = fixture('elastic-client-filter-builder-fixture');
           element.not = true;
           element.type = 'term';
           element.field = 'testField';
           element.values = 'testValue';
-          flush(function() {
-            done();
-          });
         });
 
         test('properties are set correctly', function() {
@@ -120,23 +131,16 @@ limitations under the License.
           expect(element.ejsFilter).to.exist;
           expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.NotFilter(ejs.TermFilter('testField', 'testValue')).toJSON());
         });
-
-        test('does not have html content', function() {
-          expect(Polymer.dom(element.root).children.length).to.equal(0);
-        });
       });
 
       suite('<elastic-client-filter-builder> for terms filter', function() {
         var element;
 
-        setup(function(done) {
+        setup(function() {
           element = fixture('elastic-client-filter-builder-fixture');
           element.type = 'terms';
           element.field = 'testField';
           element.values = 'testValue';
-          flush(function() {
-            done();
-          });
         });
 
         test('properties are set correctly', function() {
@@ -151,23 +155,16 @@ limitations under the License.
           expect(element.ejsFilter).to.exist;
           expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.TermsFilter('testField', 'testValue').toJSON());
         });
-
-        test('does not have html content', function() {
-          expect(Polymer.dom(element.root).children.length).to.equal(0);
-        });
       });
 
       suite('<elastic-client-filter-builder> for terms filter array', function() {
         var element;
 
-        setup(function(done) {
+        setup(function() {
           element = fixture('elastic-client-filter-builder-fixture');
           element.type = 'terms';
           element.field = 'testField';
           element.values = ['testValue1', 'testValue2'];
-          flush(function() {
-            done();
-          });
         });
 
         test('properties are set correctly', function() {
@@ -183,23 +180,16 @@ limitations under the License.
           expect(element.ejsFilter).to.exist;
           expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.TermsFilter('testField', ['testValue1', 'testValue2']).toJSON());
         });
-
-        test('does not have html content', function() {
-          expect(Polymer.dom(element.root).children.length).to.equal(0);
-        });
       });
 
       suite('<elastic-client-filter-builder> for terms filter with one value', function() {
         var element;
 
-        setup(function(done) {
+        setup(function() {
           element = fixture('elastic-client-filter-builder-fixture');
           element.type = 'terms';
           element.field = 'testField';
           element.values = ['testValue'];
-          flush(function() {
-            done();
-          });
         });
 
         test('properties are set correctly', function() {
@@ -215,23 +205,16 @@ limitations under the License.
           expect(element.ejsFilter).to.exist;
           expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.TermsFilter('testField', 'testValue').toJSON());
         });
-
-        test('does not have html content', function() {
-          expect(Polymer.dom(element.root).children.length).to.equal(0);
-        });
       });
 
       suite('<elastic-client-filter-builder> for and filter', function() {
         var element;
 
-        setup(function(done) {
+        setup(function() {
           element = fixture('elastic-client-filter-builder-fixture');
           element.type = 'and';
           element.field = null;
           element.values = [ejs.TermFilter('testField1', 'testValue1'), ejs.TermFilter('testField2', 'testValue2')];
-          flush(function() {
-            done();
-          });
         });
 
         test('properties are set correctly', function() {
@@ -249,23 +232,16 @@ limitations under the License.
           expect(element.ejsFilter).to.exist;
           expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.AndFilter([ejs.TermFilter('testField1', 'testValue1'), ejs.TermFilter('testField2', 'testValue2')]).toJSON());
         });
-
-        test('does not have html content', function() {
-          expect(Polymer.dom(element.root).children.length).to.equal(0);
-        });
       });
 
       suite('<elastic-client-filter-builder> for or filter', function() {
         var element;
 
-        setup(function(done) {
+        setup(function() {
           element = fixture('elastic-client-filter-builder-fixture');
           element.type = 'or';
           element.field = null;
           element.values = [ejs.TermFilter('testField1', 'testValue1'), ejs.TermFilter('testField2', 'testValue2')];
-          flush(function() {
-            done();
-          });
         });
 
         test('properties are set correctly', function() {
@@ -283,23 +259,16 @@ limitations under the License.
           expect(element.ejsFilter).to.exist;
           expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.OrFilter([ejs.TermFilter('testField1', 'testValue1'), ejs.TermFilter('testField2', 'testValue2')]).toJSON());
         });
-
-        test('does not have html content', function() {
-          expect(Polymer.dom(element.root).children.length).to.equal(0);
-        });
       });
 
       suite('<elastic-client-filter-builder> for range filter', function() {
         var element;
 
-        setup(function(done) {
+        setup(function() {
           element = fixture('elastic-client-filter-builder-fixture');
           element.type = 'range';
           element.field = 'testField';
           element.values = ['testValue1', 'testValue2'];
-          flush(function() {
-            done();
-          });
         });
 
         test('properties are set correctly', function() {
@@ -314,23 +283,16 @@ limitations under the License.
           expect(element.ejsFilter).to.exist;
           expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.RangeFilter('testField').gte('testValue1').lte('testValue2').toJSON());
         });
-
-        test('does not have html content', function() {
-          expect(Polymer.dom(element.root).children.length).to.equal(0);
-        });
       });
 
       suite('<elastic-client-filter-builder> for exists filter', function() {
         var element;
 
-        setup(function(done) {
+        setup(function() {
           element = fixture('elastic-client-filter-builder-fixture');
           element.type = 'exists';
           element.field = 'testField';
           element.values = null;
-          flush(function() {
-            done();
-          });
         });
 
         test('properties are set correctly', function() {
@@ -341,57 +303,107 @@ limitations under the License.
           expect(element.values).to.be.null;
         });
 
-        test('range filter is built correctly', function() {
+        test('exists filter is built correctly', function() {
           expect(element.ejsFilter).to.exist;
           expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.ExistsFilter('testField').toJSON());
         });
+      });
 
-        test('does not have html content', function() {
-          expect(Polymer.dom(element.root).children.length).to.equal(0);
+      suite('<elastic-client-filter-builder> for blank field', function() {
+        var element;
+
+        setup(function() {
+          element = fixture('elastic-client-filter-builder-fixture');
+          element.field = '';
+          element.values = ['testValue1', 'testValue2'];
+        });
+
+        test('properties are set correctly', function() {
+          expect(element.not).to.be.false;
+          expect(element.name).to.equal('');
+          expect(element.type).to.not.exist;
+          expect(element.field).to.equal('');
+          expect(element.values).to.deep.equal(['testValue1', 'testValue2']);
+        });
+
+        test('term filter is undefined', function() {
+          element.type = 'term';
+          expect(element.ejsFilter).to.be.undefined;
+        });
+
+        test('terms filter is undefined', function() {
+          element.type = 'terms';
+          expect(element.ejsFilter).to.be.undefined;
+        });
+
+        test('range filter is undefined', function() {
+          element.type = 'range';
+          expect(element.ejsFilter).to.be.undefined;
+        });
+
+        test('exists filter is undefined', function() {
+          element.type = 'exists';
+          expect(element.ejsFilter).to.be.undefined;
         });
       });
 
       suite('<elastic-client-filter-builder> for blank values', function() {
         var element;
 
-        setup(function(done) {
+        setup(function() {
           element = fixture('elastic-client-filter-builder-fixture');
-          element.type = 'term';
           element.field = 'testField';
           element.values = '';
-          flush(function() {
-            done();
-          });
         });
 
         test('properties are set correctly', function() {
           expect(element.not).to.be.false;
           expect(element.name).to.equal('');
-          expect(element.type).to.equal('term');
+          expect(element.type).to.not.exist;
           expect(element.field).to.equal('testField');
           expect(element.values).to.equal('');
         });
 
-        test('filter is not built', function() {
+        test('term filter is null', function() {
+          element.type = 'term';
           expect(element.ejsFilter).to.be.null;
         });
 
-        test('does not have html content', function() {
-          expect(Polymer.dom(element.root).children.length).to.equal(0);
+        test('terms filter is null', function() {
+          element.type = 'terms';
+          expect(element.ejsFilter).to.be.null;
+        });
+
+        test('and filter is null', function() {
+          element.type = 'and';
+          expect(element.ejsFilter).to.be.null;
+        });
+
+        test('or filter is null', function() {
+          element.type = 'or';
+          expect(element.ejsFilter).to.be.null;
+        });
+
+        test('range filter is null', function() {
+          element.type = 'range';
+          expect(element.ejsFilter).to.be.null;
+        });
+
+        test('exists filter is not null', function() {
+          element.type = 'exists';
+          expect(element.ejsFilter).to.exist;
+          expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.ExistsFilter('testField').toJSON());
         });
       });
 
       suite('<elastic-client-filter-builder> for empty values array', function() {
         var element;
 
-        setup(function(done) {
+        setup(function() {
           element = fixture('elastic-client-filter-builder-fixture');
           element.type = 'term';
           element.field = 'testField';
           element.values = [];
-          flush(function() {
-            done();
-          });
         });
 
         test('properties are set correctly', function() {
@@ -402,12 +414,8 @@ limitations under the License.
           expect(element.values).to.deep.equal([]);
         });
 
-        test('filter is not built', function() {
+        test('filter is null', function() {
           expect(element.ejsFilter).to.be.null;
-        });
-
-        test('does not have html content', function() {
-          expect(Polymer.dom(element.root).children.length).to.equal(0);
         });
       });
 

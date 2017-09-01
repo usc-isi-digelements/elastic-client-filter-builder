@@ -131,7 +131,7 @@ A Polymer Element which builds an elasticjs filter based on the set attributes.
          */
         buildFilter: function(type, not, name, field, values, force) {
           var ejsFilter;
-          if(type === 'exists') {
+          if(type === 'exists' && field) {
             ejsFilter = ejs.ExistsFilter(field);
           }
           else if(!force && (!values || (values.constructor === Array && !values.length))) {
