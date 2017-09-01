@@ -24,6 +24,15 @@ limitations under the License.
   </head>
   <body unresolved>
     <dom-bind>
+      <script>
+        (function(document) {
+          var domBind = document.querySelector('dom-bind');
+
+          domBind.stringify = function(ejs) {
+            return JSON.stringify(ejs);
+          };
+        })(document);
+      </script>
       <template is="dom-bind" id="demo">
         <p>===== DEMO 1 =====</p>
         <p>Field: 'myField'</p>
@@ -87,14 +96,5 @@ limitations under the License.
         <p>Resulting ElasticJS filter from <code>&lt;elastic-client-filter-builder&gt;</code>: {{stringify(filter4)}}</p>
       </template>
     </dom-bind>
-    <script>
-      (function(document) {
-        var demo = document.querySelector('#demo');
-
-        demo.stringify = function(ejs) {
-          return JSON.stringify(ejs);
-        };
-      })(document);
-    </script>
   </body>
 </html>

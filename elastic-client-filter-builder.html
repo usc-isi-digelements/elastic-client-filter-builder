@@ -144,7 +144,7 @@ A Polymer Element which builds an elasticjs filter based on the set attributes.
           else if(type === 'or') {
             ejsFilter = ejs.OrFilter(values);
           }
-          else if(type === 'range') {
+          else if(type === 'range' && field) {
             ejsFilter = ejs.RangeFilter(field);
             if(values && values.constructor === Array && values.length === 2) {
               if(typeof values[0] !== 'undefined') {
@@ -155,11 +155,11 @@ A Polymer Element which builds an elasticjs filter based on the set attributes.
               }
             }
           }
-          else if(type === 'term') {
+          else if(type === 'term' && field) {
             var term = (values && values.constructor === Array && values.length === 1) ? values[0] : values;
             ejsFilter = ejs.TermFilter(field, term);
           }
-          else if(type === 'terms') {
+          else if(type === 'terms' && field) {
             var terms = (values && values.constructor === Array && values.length === 1) ? values[0] : values;
             ejsFilter = ejs.TermsFilter(field, terms);
           }
