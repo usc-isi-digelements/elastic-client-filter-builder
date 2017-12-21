@@ -139,10 +139,16 @@ A Polymer Element which builds an elasticjs filter based on the set attributes.
             return null;
           }
           else if(type === 'and') {
-            ejsFilter = ejs.AndFilter(values);
+            ejsFilter = ejs.BoolFilter();
+            values.forEach(function(value) {
+              ejsFilter.must(value);
+            });
           }
           else if(type === 'or') {
-            ejsFilter = ejs.OrFilter(values);
+            ejsFilter = ejs.BoolFilter();
+            values.forEach(function(value) {
+              ejsFilter.should(value);
+            });
           }
           else if(type === 'range' && field) {
             ejsFilter = ejs.RangeFilter(field);

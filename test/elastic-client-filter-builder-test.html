@@ -230,7 +230,7 @@ limitations under the License.
 
         test('and filter is built correctly', function() {
           expect(element.ejsFilter).to.exist;
-          expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.AndFilter([ejs.TermFilter('testField1', 'testValue1'), ejs.TermFilter('testField2', 'testValue2')]).toJSON());
+          expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.BoolFilter().must([ejs.TermFilter('testField1', 'testValue1'), ejs.TermFilter('testField2', 'testValue2')]).toJSON());
         });
       });
 
@@ -257,7 +257,7 @@ limitations under the License.
 
         test('or filter is built correctly', function() {
           expect(element.ejsFilter).to.exist;
-          expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.OrFilter([ejs.TermFilter('testField1', 'testValue1'), ejs.TermFilter('testField2', 'testValue2')]).toJSON());
+          expect(element.ejsFilter.toJSON()).to.deep.equal(ejs.BoolFilter().should([ejs.TermFilter('testField1', 'testValue1'), ejs.TermFilter('testField2', 'testValue2')]).toJSON());
         });
       });
 
