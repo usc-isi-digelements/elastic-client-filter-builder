@@ -10,14 +10,14 @@
     "elastic.js"
   ],
   "main": "elastic-client-filter-builder.html",
-  "homepage": "https://github.com/DigElements/elastic-client-filter-builder/",
+  "homepage": "https://github.com/usc-isi-digelements/elastic-client-filter-builder/",
   "ignore": [
     "/.*",
     "/test/"
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.2",
-    "elasticjs-import": "DigElements/elasticjs-import#~1.0.0"
+    "elasticjs-import": "usc-isi-digelements/elasticjs-import#~1.0.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^2.0.0",
